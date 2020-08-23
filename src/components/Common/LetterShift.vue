@@ -1,13 +1,21 @@
 <template>
   <div class="container">
     <Letter :letter="from" />
-    <div class="extended-line" />
-    <i class="el-icon-right" />
-    <Letter :letter="to" />
+    <v-stage :config="configKonva">
+      <v-layer>
+        <v-arrow
+          :points="[15, 6, 155, 6]"
+          fill="#2c3e50"
+          stroke="#2c3e50"
+          :stroke-width="4"
+        />
+      </v-layer>
+    </v-stage>
 
     <div class="text-container">
       <span>{{ text }}</span>
     </div>
+    <Letter :letter="to" />
   </div>
 </template>
 
@@ -16,15 +24,23 @@ import Letter from './Letter.vue';
 
 export default {
   name: 'LetterShift',
-  props: {
-    from: String,
-    to: String,
-    showShift: Boolean,
-    shiftLeft: Boolean,
-    shiftAmount: Number
-  },
   components: {
     Letter,
+  },
+  props: {
+    from: { type: String, required: true },
+    to: { type: String, required: true },
+    showShift: { type: Boolean, default: false },
+    shiftLeft: { type: Boolean, required: false },
+    shiftAmount: { type: Number, required: false }
+  },
+  data() {
+    return {
+      configKonva: {
+        width: 170,
+        height: 11
+      }
+    };
   },
   computed: {
     text() {
@@ -56,18 +72,6 @@ export default {
 
 span {
   line-height: 1;
-}
-
-.extended-line {
-  height: 1.25px;
-  width: 8rem;
-  background-color: #2c3e50;
-  transform: translate(16px, .2px);
-}
-
-i {
-  font-size: 1.5rem;
-  margin-right: .5rem;
 }
 
 .text-container {

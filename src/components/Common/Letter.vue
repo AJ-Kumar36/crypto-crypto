@@ -8,7 +8,7 @@
 export default {
   name: 'Letter',
   props: {
-    letter: String
+    letter: { type: String, required: true }
   }
 }
 </script>
