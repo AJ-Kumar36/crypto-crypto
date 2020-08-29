@@ -2,20 +2,29 @@
   <div>
     <h1>Try to do the Caesar shifting!</h1>
     <p>Try encrypting the secret message!</p>
-    <h1>{{initialMessage}}</h1>
-    <h1>{{ secretMessage }}</h1>
+    <h1 font-family>
+      {{ initialMessage }}
+    </h1>
+    <h1>
+      {{ secretMessage }}
+    </h1>
     <v-stage :config="configKonva">
       <v-layer>
         <v-group>
           <v-group
-            :width="50"
-            :height="50"
-            :y="2"
             v-for="(letter, index) in shiftArray(0)"
             :key="(letter) "
-            :x="20 + index*50"
+            :width="50"
+            :height="50"
+            :x="centerShift + index*50"
+            :y="2"
           >
-            <v-rect :width="50" :height="50" stroke="black" :strokeWidth="2"></v-rect>
+            <v-rect 
+              :width="50" 
+              :height="50" 
+              stroke="black" 
+              :stroke-width="2"
+            />
             <v-text
               :text="letter"
               fill="black"
@@ -24,17 +33,22 @@
               :height="50"
               :fontSize="30"
               verticalAlign="middle"
-            ></v-text>
+            />
           </v-group>
           <v-group
+            v-for="(letter, index) in shiftArray(shift)"
+            :key="(letter) "
             :width="50"
             :height="50"
             :y="202"
-            v-for="(letter, index) in shiftArray(shift)"
-            :key="(letter) "
-            :x="20 + index*50"
+            :x="centerShift + index*50"
           >
-            <v-rect :width="50" :height="50" stroke="black" :strokeWidth="2"></v-rect>
+            <v-rect 
+              :width="50" 
+              :height="50" 
+              stroke="black" 
+              :stroke-width="2"
+            />
             <v-text
               :text="letter"
               fill="black"
@@ -43,24 +57,30 @@
               :height="50"
               :fontSize="30"
               verticalAlign="middle"
-            ></v-text>
+            />
           </v-group>
           <v-arrow
             v-for="(letter, index) in shiftArray(shift)"
             :key="(index)"
-            :points="[(index*50)+45, 50, (index*50)+45, 200]"
-            :pointerLength="10"
-            :pointerWidth="10"
+            :points="[(index*50)+centerShift+25, 50, (index*50)+centerShift+25, 200]"
             fill="black"
             stroke="black"
-            :strokeWidth="4"
-          ></v-arrow>
+            :stroke-width="5"
+          />
         </v-group>
       </v-layer>
     </v-stage>
     <el-row>
-      <el-button @click="incrementShift">Backward</el-button>
-      <el-button @click="decrementShift">Forward</el-button>
+      <el-button
+        @click="incrementShift"
+      >
+        Backward
+      </el-button>
+      <el-button 
+        @click="decrementShift"
+      >
+        Forward
+      </el-button>
     </el-row>
   </div>
 </template>
@@ -78,6 +98,11 @@ export default {
       initialMessage: "Secret Message",
       secretMessage: "Secret Message",
     };
+  },
+  computed: {
+    centerShift() {
+      return (window.innerWidth-(26*50))/2
+    }
   },
   methods: {
     shiftArray(shift) {
@@ -115,4 +140,8 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+  font-family: "Lucida Console", Courier, monospace;
+}
+
 </style>
