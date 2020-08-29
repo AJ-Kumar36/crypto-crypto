@@ -13,7 +13,7 @@
         <v-group>
           <v-group
             v-for="(letter, index) in shiftArray(0)"
-            :key="(letter) "
+            :key="'InitArray'+index"
             :width="50"
             :height="50"
             :x="centerShift + index*50"
@@ -37,7 +37,7 @@
           </v-group>
           <v-group
             v-for="(letter, index) in shiftArray(shift)"
-            :key="(letter) "
+            :key="'ShiftArray'+index"
             :width="50"
             :height="50"
             :y="202"
@@ -61,7 +61,7 @@
           </v-group>
           <v-arrow
             v-for="(letter, index) in shiftArray(shift)"
-            :key="(index)"
+            :key="'Arrows'+index"
             :points="[(index*50)+centerShift+25, 50, (index*50)+centerShift+25, 200]"
             fill="black"
             stroke="black"
@@ -145,3 +145,4 @@ h1 {
 }
 
 </style>
+git 
