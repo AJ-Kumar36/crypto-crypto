@@ -8,68 +8,7 @@
     <h1>
       {{ secretMessage }}
     </h1>
-    <v-stage :config="configKonva">
-      <v-layer>
-        <v-group>
-          <v-group
-            v-for="(letter, index) in shiftArray(0)"
-            :key="'InitArray'+index"
-            :width="50"
-            :height="50"
-            :x="centerShift + index*50"
-            :y="2"
-          >
-            <v-rect 
-              :width="50" 
-              :height="50" 
-              stroke="black" 
-              :stroke-width="2"
-            />
-            <v-text
-              :text="letter"
-              fill="black"
-              align="center"
-              :width="50"
-              :height="50"
-              :fontSize="30"
-              verticalAlign="middle"
-            />
-          </v-group>
-          <v-group
-            v-for="(letter, index) in shiftArray(shift)"
-            :key="'ShiftArray'+index"
-            :width="50"
-            :height="50"
-            :y="202"
-            :x="centerShift + index*50"
-          >
-            <v-rect 
-              :width="50" 
-              :height="50" 
-              stroke="black" 
-              :stroke-width="2"
-            />
-            <v-text
-              :text="letter"
-              fill="black"
-              align="center"
-              :width="50"
-              :height="50"
-              :fontSize="30"
-              verticalAlign="middle"
-            />
-          </v-group>
-          <v-arrow
-            v-for="(letter, index) in shiftArray(shift)"
-            :key="'Arrows'+index"
-            :points="[(index*50)+centerShift+25, 50, (index*50)+centerShift+25, 200]"
-            fill="black"
-            stroke="black"
-            :stroke-width="5"
-          />
-        </v-group>
-      </v-layer>
-    </v-stage>
+    <LetterArray initialMessage="SecretMessage" :shift="shift"/>
     <el-row>
       <el-button
         @click="incrementShift"
@@ -86,8 +25,13 @@
 </template>
 
 <script>
+import LetterArray from './LetterArray.vue';
+
 export default {
   name: "CaesarTryToShift",
+  components: {
+    LetterArray,
+  },
   data() {
     return {
       configKonva: {
@@ -143,6 +87,5 @@ export default {
 h1 {
   font-family: "Lucida Console", Courier, monospace;
 }
-
 </style>
 git 
