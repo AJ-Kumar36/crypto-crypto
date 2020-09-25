@@ -18,8 +18,8 @@
             :x="index*50"
             :y="2"
           >
+            <v-rect v-if="index===0" :width="50" :height="50" stroke="black" :stroke-width="2" fill="lightblue"/>
             <v-rect v-if="index===shift" :width="50" :height="50" stroke="black" :stroke-width="2" fill="lightgreen"/>
-            <v-rect v-else-if="index===25" :width="50" :height="50" stroke="black" :stroke-width="2" fill="green"/>
             <v-rect v-else :width="50" :height="50" stroke="black" :stroke-width="2" />
             <v-text
               :text="letter"
