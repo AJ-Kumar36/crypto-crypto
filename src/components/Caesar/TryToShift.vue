@@ -1,46 +1,93 @@
 <template>
   <div>
     <h1>Try to do the Caesar shifting!</h1>
+    <LetterShift
+      from="A"
+      to="B"
+      :quizTo="true"
+    />
+
+    <LetterShift
+      from="X"
+      to="Z"
+      :quizTo="true"
+    />
+
+    <br>
+
+    <LetterShift
+      from="C"
+      to="T"
+      :quizFrom="true"
+    />
+
+    <LetterShift
+      from="P"
+      to="D"
+      :quizFrom="true"
+    />
+
     <p>Try encrypting the secret message!</p>
     <h1 font-family>
       {{ input }}
-      <el-input placeholder="Secret Message" v-model="input"></el-input>
+      <el-input
+        v-model="input"
+        placeholder="Secret Message"
+      />
     </h1>
     <h1>{{ secretMessage }}</h1>
-    <LetterArray :initialMessage="input" :shift="shift" />
+    <LetterArray
+      :initialMessage="input"
+      :shift="shift"
+    />
     <el-row>
-      <el-button @click="incrementShift">Left Shift</el-button>
-      <el-button @click="decrementShift">Right Shift</el-button>
+      <el-button @click="incrementShift">
+        Left Shift
+      </el-button>
+      <el-button @click="decrementShift">
+        Right Shift
+      </el-button>
     </el-row>
     <br>
     <p> Encrypt the following messages using a Caesar Cipher! </p>
-    <el-form ref="form" :model="form" label-width="300px">
+    <el-form
+      ref="form"
+      :model="form"
+      label-width="300px"
+    >
       <el-form-item label="Secret Message (Shifted Left by 5)">
-        <el-input v-model="form.quest_1"></el-input>
+        <el-input v-model="form.quest_1" />
       </el-form-item>
       <el-form-item label="Secret Message (Shifted Right by 10)">
-        <el-input v-model="form.quest_2"></el-input>
+        <el-input v-model="form.quest_2" />
       </el-form-item>
       <el-form-item label="Caesar (Shifted Left by 3)">
-        <el-input v-model="form.quest_3"></el-input>
+        <el-input v-model="form.quest_3" />
       </el-form-item>
       <el-form-item label="Caesar (Shifted Right by 23)">
-        <el-input v-model="form.quest_4"></el-input>
+        <el-input v-model="form.quest_4" />
       </el-form-item>
       <el-form-item label="Cipher (Shifted Left by 12)">
-        <el-input v-model="form.quest_5"></el-input>
+        <el-input v-model="form.quest_5" />
       </el-form-item>
-      <el-button type="primary" @click="submit_encrypt">Check Answers</el-button>
+      <el-button
+        type="primary"
+        @click="submit_encrypt"
+      >
+        Check Answers
+      </el-button>
     </el-form>
   </div>
 </template>
 
 <script>
+import LetterShift from '../Common/LetterShift.vue';
 import LetterArray from "./LetterArray.vue";
 
 export default {
   name: "CaesarTryToShift",
   components: {
+    LetterShift,
     LetterArray,
   },
   data() {

@@ -1,6 +1,14 @@
 <template>
   <div class="container">
-    <Letter :letter="from" />
+    <LetterInput
+      v-if="quizFrom"
+      :letter="from"
+    />
+    <Letter
+      v-else
+      :letter="from"
+    />
+
     <v-stage :config="configKonva">
       <v-layer>
         <v-arrow
@@ -15,24 +23,36 @@
     <div class="text-container">
       <span>{{ text }}</span>
     </div>
-    <Letter :letter="to" />
+    
+    <LetterInput
+      v-if="quizTo"
+      :letter="to"
+    />
+    <Letter
+      v-else
+      :letter="to"
+    />
   </div>
 </template>
 
 <script>
 import Letter from './Letter.vue';
+import LetterInput from './LetterInput.vue';
 
 export default {
   name: 'LetterShift',
   components: {
     Letter,
+    LetterInput,
   },
   props: {
     from: { type: String, required: true },
     to: { type: String, required: true },
     showShift: { type: Boolean, default: false },
     shiftLeft: { type: Boolean, required: false },
-    shiftAmount: { type: Number, required: false }
+    shiftAmount: { type: Number, required: false, default: undefined },
+    quizFrom: { type: Boolean, required: false, default: false },
+    quizTo: { type: Boolean, required: false, default: false }
   },
   data() {
     return {
@@ -44,7 +64,7 @@ export default {
   },
   computed: {
     text() {
-      if (!this.showShift) return '';
+      if (!this.quizFrom && !this.quizTo && !this.showShift) return '';
       let shiftAmount = this.shiftAmount;
       if (shiftAmount === undefined) {
         if (this.shiftLeft) {
@@ -68,6 +88,7 @@ export default {
   display: inline-flex;
   align-items: center;
   position: relative;
+  padding: 1rem 2rem;
 }
 
 span {
