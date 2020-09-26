@@ -60,6 +60,9 @@ export default {
   computed: {
     centerShift() {
       return (window.innerWidth-(26*50))/2
+    },
+    windowHeight() {
+      return this.initialMessage.length*50+20; 
     }
   },
   methods: {
@@ -71,7 +74,15 @@ export default {
       return shiftedArray;
     },
     splitList(initMsg) {
-      let split = initMsg.toUpperCase().split("");
+      let newString = "";
+      for(let i = 0; i < initMsg.length; i++){
+        let curr = initMsg.charCodeAt(i);
+        if( (curr >= 65 && curr <=90) || (curr >= 97 && curr <=122) )
+          newString+=String.fromCharCode(curr);
+      }
+      if(newString.length > 13)
+        newString = newString.substring(0,13);
+      let split = newString.toUpperCase().split("");
       return split;
     },
   },

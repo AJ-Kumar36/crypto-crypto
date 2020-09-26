@@ -99,9 +99,9 @@ export default {
       shift: 0,
       initialMessage: "Secret Message",
       secretMessage: "Secret Message",
-      input: "",
+      input: "Secret Message",
       form: {
-          quest_1: 'Default',
+          quest_1: '',
           quest_2: '',
           quest_3: '',
           quest_4: '',
