@@ -44,7 +44,29 @@ function encrypt(key, plainText) {
 }
 
 function decrypt(key, cipherText) {
-  return '';
+  //convert both parameters to lowercase
+  key = key.toLowerCase()
+  cipherText = cipherText.toLowerCase()
+
+  var length = key.length
+  var plainText = ""
+
+  for(i = 0; i < cipherText.length; ++i){
+    // don't decrypt special characters, only letters
+    if((cipherText[i].charCodeAt() > 122) || (cipherText[i].charCodeAt() < 97)){
+      plainText = plainText.concat(plainText[i]);
+      continue
+    }
+    // calculate new character based on ciphertext - key
+    var plainTextChar = (cipherText[i].charCodeAt()) - (key[i%length].charCodeAt()) - 97
+    // Add 26, if outside bounds of lowercase letters
+    if(plainTextChar < 97){
+      plainTextChar += 26
+    }
+    // concatenate decrypted letter to decrypted string
+    plainText = plainText.concat(String.fromCharCode(plainTextChar))
+  }
+  return plainText;
 }
 
 console.log(getVigenereSquare());
