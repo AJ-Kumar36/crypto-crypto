@@ -41,10 +41,10 @@
       :shift="shift"
     />
     <el-row>
-      <el-button @click="decrementShift">
+      <el-button @click="incrementShift">
         Left Shift
       </el-button>
-      <el-button @click="incrementShift">
+      <el-button @click="decrementShift">
         Right Shift
       </el-button>
     </el-row>
@@ -98,7 +98,6 @@ export default {
       },
       shift: 0,
       initialMessage: "Secret Message",
-      secretMessage: "Secret Message",
       input: "Secret Message",
       form: {
           quest_1: '',
@@ -123,37 +122,35 @@ export default {
     centerShift() {
       return (window.innerWidth - 26 * 50) / 2;
     },
-  },
-  methods: {
-    shiftArray(shift) {
-      let shiftedArray = [];
-      for (let i = 0; i < 26; i++) {
-        shiftedArray.push(String.fromCharCode(((i + shift) % 26) + 65));
-      }
-      return shiftedArray;
-    },
-    incrementShift() {
-      this.shift = (this.shift + 1) % 26;
-      this.secretMessage = this.calculateCaesar();
-    },
-    decrementShift() {
-      this.shift = (this.shift + 25) % 26;
-      this.secretMessage = this.calculateCaesar();
-    },
-    calculateCaesar() {
-      let message = "";
+    secretMessage() {
+      let message = '';
       let curr = 0;
       for (let i = 0; i < this.input.length; i++) {
         curr = this.input.charCodeAt(i);
         if (curr >= 65 && curr <= 90) {
-          message += String.fromCharCode(((curr - 65 + this.shift) % 26) + 65);
+          message += String.fromCharCode(((curr - 65 + (26 - this.shift)) % 26) + 65);
         } else if (curr >= 97 && curr <= 122) {
-          message += String.fromCharCode(((curr - 97 + this.shift) % 26) + 97);
+          message += String.fromCharCode(((curr - 97 + (26 - this.shift)) % 26) + 97);
         } else {
           message += String.fromCharCode(curr);
         }
       }
       return message;
+    }
+  },
+  methods: {
+    shiftArray(shift) {
+      let shiftedArray = [];
+      for (let i = 0; i < 26; i++) {
+        shiftedArray.push(String.fromCharCode((i + shift) % 26 + 65));
+      }
+      return shiftedArray;
+    },
+    incrementShift() {
+      this.shift = (this.shift + 1) % 26;
+    },
+    decrementShift() {
+      this.shift = (this.shift + 25) % 26;
     },
     submit_encrypt(){
       if( this.quest_1 === this.ans_1 && this.quest_2 === this.ans_2 && 
@@ -199,4 +196,3 @@ h1 {
   font-family: "Lucida Console", Courier, monospace;
 }
 </style>
-git 
