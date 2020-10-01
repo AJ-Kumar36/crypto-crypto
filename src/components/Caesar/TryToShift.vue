@@ -41,10 +41,10 @@
       :shift="shift"
     />
     <el-row>
-      <el-button @click="incrementShift">
+      <el-button @click="decrementShift">
         Left Shift
       </el-button>
-      <el-button @click="decrementShift">
+      <el-button @click="incrementShift">
         Right Shift
       </el-button>
     </el-row>
