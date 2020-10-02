@@ -55,6 +55,7 @@ function decrypt(key, cipherText) {
     if(cipherText[i].charCodeAt() == 32)
     {
       plainText = plainText.concat(" ");
+      continue
     }
     // don't decrypt special characters, only letters
     if((cipherText[i].charCodeAt() > 122) || (cipherText[i].charCodeAt() < 97)){
