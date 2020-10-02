@@ -52,19 +52,23 @@ function decrypt(key, cipherText) {
   var plainText = ""
 
   for(i = 0; i < cipherText.length; ++i){
+    if(cipherText[i].charCodeAt() == 32)
+    {
+      plainText = plainText.concat(" ");
+    }
     // don't decrypt special characters, only letters
     if((cipherText[i].charCodeAt() > 122) || (cipherText[i].charCodeAt() < 97)){
       plainText = plainText.concat(plainText[i]);
       continue
     }
     // calculate new character based on ciphertext - key
-    var plainTextChar = (cipherText[i].charCodeAt()) - (key[i%length].charCodeAt()) - 97
+    var plainTextChar = (cipherText[i].charCodeAt()) - (key[i%length].charCodeAt())
     // Add 26, if outside bounds of lowercase letters
-    if(plainTextChar < 97){
+    if(plainTextChar < 0){
       plainTextChar += 26
     }
     // concatenate decrypted letter to decrypted string
-    plainText = plainText.concat(String.fromCharCode(plainTextChar))
+    plainText = plainText.concat(String.fromCharCode(plainTextChar + 97))
   }
   return plainText;
 }
