@@ -7,6 +7,7 @@ import VueKonva from 'vue-konva';
 
 import App from './App.vue'
 import CaesarPage from './pages/Caesar.vue';
+import VigenerePage from './pages/Vigenere.vue';
 
 Vue.config.productionTip = false
 Vue.use(VueRouter)
@@ -19,6 +20,7 @@ const router = new VueRouter({
   routes: [
     { path: '/', redirect: '/caesar' },
     { path: '/caesar', component: CaesarPage },
+    { path: '/vigenere', component: VigenerePage },
   ],
 });
 
