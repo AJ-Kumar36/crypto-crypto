@@ -25,4 +25,8 @@ export default {
   align-items: center;
   line-height: 1;
 }
+
+span {
+  margin-top: 0.1rem;
+}
 </style>
