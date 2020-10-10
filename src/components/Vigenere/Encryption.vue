@@ -2,25 +2,47 @@
   <div class="container">
     <span>Alphabet encryption scheme goes here</span>
     <div class="frame">
-      <el-form class="letter-input-container" v-if="guessPlainText">
-        <el-form-item v-for="(letter, index) in sanitizedText" :key="index">
+      <el-form
+        v-if="guessPlainText"
+        class="letter-blocks"
+      >
+        <el-form-item
+          v-for="(letter, index) in sanitizedText"
+          :key="index"
+        >
           <el-input
+            :ref="`plainTextInput${index}`"
             v-model="plainTextInputs[index]"
-            :class="['letter-input']"
+            :class="['letter-block', !isPlainTextGuessCorrect || 'green']"
             status="warning"
+            @input="() => updatePlainTextInput(index)"
           />
         </el-form-item>
       </el-form>
-      <div v-else>
-        <div v-for="(letter, index) in sanitizedText" :key="index" class="letter-block">
+      <div
+        v-else
+        class="letter-blocks"
+      >
+        <div
+          v-for="(letter, index) in sanitizedText"
+          :key="index"
+          class="letter-block"
+        >
           <span>{{ letter }}</span>
         </div>
       </div>
-      <CircleLetter
-        v-for="(letter, index) in repetitiveKey"
-        :key="index"
-        :letter="letter"
-      />
+
+      <div class="row">
+        <div
+          v-for="(letter, index) in repetitiveKey"
+          :key="index"
+          class="middle-cell"
+        >
+          <span>+</span>
+          <CircleLetter :letter="letter" />
+          <span>=</span>
+        </div>
+      </div>
     </div>
     <div class="inputs">
       <el-input
@@ -61,11 +83,11 @@ export default {
   props: {
     plainText: { type: String, required: true },
     vigenereKey: { type: String, required: true },
-    guessPlainText: { type: Boolean, default: false },
+    guessPlainText: { type: Boolean, default: true },
     guessEncryptedText: { type: Boolean, default: false },
     guessKey: { type: Boolean, default: false },
-    customizedPlainText: { type: Boolean, default: true },
-    customizedKeyText: {type: Boolean, default: true }
+    customizedPlainText: { type: Boolean, default: false },
+    customizedKeyText: {type: Boolean, default: false }
   },
   data() {
     return {
@@ -79,8 +101,7 @@ export default {
       let text = ''
       if (this.customizedPlainText){
         text = (this.customPlain || '').toUpperCase();
-      }
-      else {
+      } else {
         text = (this.plainText || '').toUpperCase();
       }
 
@@ -112,6 +133,34 @@ export default {
       }
       return repKey;
     },
+    isPlainTextGuessCorrect() {
+      return this.plainTextInputs.join() === this.sanitizedText.join();
+    },
+  },
+  watch: {
+    sanitizedText: function (newText) {
+      const emptyInputs = [];
+      for (let i = 0; i < newText.length; i++) {
+        emptyInputs.push('');
+      }
+      this.plainTextInputs = emptyInputs;
+    }
+  },
+  methods: {
+    getSingleInput(input) {
+      if (input.length > 1) input = input[input.length - 1];
+      input = input.toUpperCase();
+      if (input.charCodeAt(0) < 'A'.charCodeAt(0) || input.charCodeAt(0) > 'Z'.charCodeAt(0)) {
+        input = '';
+      }
+      return input;
+    },
+    updatePlainTextInput(index) {
+      this.plainTextInputs[index] = this.getSingleInput(this.plainTextInputs[index]);
+      if (this.plainTextInputs[index].length > 0 && index < this.sanitizedText.length - 1) {
+        this.$refs[`plainTextInput${index + 1}`][0].focus();
+      }
+    }
   },
 }
 </script>
@@ -124,20 +173,82 @@ export default {
 
 .frame {
   display: flex;
+  flex-direction: column;
 }
 
 .input {
   width: 300px;
 }
 
+.row {
+  display: flex;
+  justify-content: space-around;
+}
+
+.letter-blocks {
+  display: flex;
+  border: 2px solid #333;
+  border-left: none;
+}
+
 .letter-block {
   font-size: 1.5rem;
   width: 3rem;
   height: 3rem;
-  border: 1px solid #d7dae2;
+  border-left: 2px solid #333;
   display: flex;
   justify-content: center;
   align-items: center;
   line-height: 1;
+  font-weight: bold;
+  transition: all 0.5s;
+}
+
+.middle-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 3rem;
+  border-left: 2px solid #979797;
+  border-right: 2px solid #979797;
+  height: 7rem;
+  font-size: 1.5rem;
+}
+
+.middle-cell:nth-child(odd),
+.letter-blocks > .letter-block:nth-child(odd) {
+  background-color: #D8D8D8;
+}
+
+.letter-block:not(:first-child), .middle-cell:not(:first-child) {
+  border-left: 0;
+}
+
+.green {
+  background-color: rgba(46, 204, 113, 0.7);
+}
+</style>
+
+<style>
+.letter-blocks, .letter-blocks .el-form-item {
+  margin: 0;
+}
+
+.letter-blocks .letter-block > input {
+  font-size: 1.5rem;
+  width: 3rem;
+  height: 3rem;
+  line-height: 1;
+  text-align: center;
+  padding: 0;
+  border: none;
+  background-color: rgba(46, 204, 113, 0);
+  color: #333;
+  border-radius: 0;
+}
+
+.letter-blocks > .el-form-item:nth-child(odd) {
+  background-color: #D8D8D8;
 }
 </style>
