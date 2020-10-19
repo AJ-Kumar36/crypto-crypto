@@ -171,6 +171,7 @@ export default {
       } else {
         encKey = this.vigenereKey
       }
+      encKey = encKey.toUpperCase()
       for (let i = 0; i < this.sanitizedText.length; i++) {
         repKey.push(encKey[i % encKey.length]);
       }
@@ -185,8 +186,6 @@ export default {
       return this.plainTextInputs.join() === this.sanitizedText.join();
     },
     isEncTextGuessCorrect() {
-      console.log(this.encTextOutputs)
-      console.log(this.sanitizedEnc)
       return this.encTextOutputs.join('') === this.sanitizedEnc;
     },
   },
