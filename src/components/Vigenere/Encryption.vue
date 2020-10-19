@@ -43,6 +43,35 @@
           <span>=</span>
         </div>
       </div>
+      <el-form
+        v-if="guessEncryptedText"
+        class="letter-blocks"
+      >
+        <el-form-item
+          v-for="(letter, index) in sanitizedEnc"
+          :key="index"
+        >
+          <el-input
+            :ref="`encTextOutputs${index}`"
+            v-model="encTextOutputs[index]"
+            :class="['letter-block', !isEncTextGuessCorrect || 'green']"
+            status="warning"
+            @input="() => updateEncTextOutput(index)"
+          />
+        </el-form-item>
+      </el-form>
+      <div
+        v-else
+        class="letter-blocks"
+      >
+        <div
+          v-for="(letter, index) in sanitizedEnc"
+          :key="index"
+          class="letter-block"
+        >
+          <span>{{ letter }}</span>
+        </div>
+      </div>
     </div>
     <div class="inputs">
       <el-input
@@ -61,6 +90,7 @@
 
 <script>
 import CircleLetter from '../Common/CircleLetter.vue';
+import {encrypt} from './utils';
 
 /**
  * TODO: Display the vigenere cipher layout // TODO: @atish3
@@ -83,8 +113,8 @@ export default {
   props: {
     plainText: { type: String, required: true },
     vigenereKey: { type: String, required: true },
-    guessPlainText: { type: Boolean, default: true },
-    guessEncryptedText: { type: Boolean, default: false },
+    guessPlainText: { type: Boolean, default: false },
+    guessEncryptedText: { type: Boolean, default: true },
     guessKey: { type: Boolean, default: false },
     customizedPlainText: { type: Boolean, default: false },
     customizedKeyText: {type: Boolean, default: false }
@@ -94,12 +124,13 @@ export default {
       customPlain: '', 
       keytext: '',
       plainTextInputs: [],
+      encTextOutputs: [],
     }
   },
   computed: {
     sanitizedText() {
       let text = ''
-      if (this.customizedPlainText){
+      if (this.customPlain.length > 0){
         text = (this.customPlain || '').toUpperCase();
       } else {
         text = (this.plainText || '').toUpperCase();
@@ -116,6 +147,18 @@ export default {
       
       return sanitizedText.split('');
     },
+    sanitizedEnc() {
+      let text = this.encryptedText.toUpperCase()
+      let sanitizedEnc = ''
+
+      for (let char of text) {
+        const charCode = char.charCodeAt(0);
+        if (charCode >= aAscii && charCode <= zAscii) {
+          sanitizedEnc += char;
+        }
+      }
+      return sanitizedEnc;
+    },
     repetitiveKey() {
       /**
        * When plainText = 'ababab' and vigenereKey = 'abc',
@@ -123,7 +166,7 @@ export default {
        */
       let repKey = [];
       let encKey = ''
-      if (this.customizedKeyText && this.keytext.length > 0){
+      if (this.keytext.length > 0){
         encKey = this.keytext
       } else {
         encKey = this.vigenereKey
@@ -133,8 +176,18 @@ export default {
       }
       return repKey;
     },
+    encryptedText() {
+      let text = this.sanitizedText.join('')
+      let encKey = this.repetitiveKey.join('')
+      return encrypt(encKey, text)
+    },
     isPlainTextGuessCorrect() {
       return this.plainTextInputs.join() === this.sanitizedText.join();
+    },
+    isEncTextGuessCorrect() {
+      console.log(this.encTextOutputs)
+      console.log(this.sanitizedEnc)
+      return this.encTextOutputs.join('') === this.sanitizedEnc;
     },
   },
   watch: {
@@ -159,6 +212,12 @@ export default {
       this.plainTextInputs[index] = this.getSingleInput(this.plainTextInputs[index]);
       if (this.plainTextInputs[index].length > 0 && index < this.sanitizedText.length - 1) {
         this.$refs[`plainTextInput${index + 1}`][0].focus();
+      }
+    },
+    updateEncTextOutput(index) {
+      this.encTextOutputs[index] = this.getSingleInput(this.encTextOutputs[index]);
+      if (this.encTextOutputs[index].length > 0 && index < this.sanitizedEnc.length - 1) {
+        this.$refs[`encTextOutputs${index + 1}`][0].focus();
       }
     }
   },
