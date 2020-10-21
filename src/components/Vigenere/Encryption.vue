@@ -279,7 +279,7 @@ export default {
   background-color: #D8D8D8;
 }
 
-.letter-block:not(:first-child), .middle-cell:not(:first-child) {
+.middle-cell:not(:first-child) {
   border-left: 0;
 }
 
