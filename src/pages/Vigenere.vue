@@ -2,7 +2,10 @@
   <div>
     <Introduction />
     <Table />
-    <Encryption />
+    <Encryption
+      plainText="Happy"
+      vigenereKey="SAD"
+    />
     <Conclusion />
   </div>
 </template>

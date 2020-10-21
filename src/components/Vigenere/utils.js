@@ -1,6 +1,7 @@
 function getVigenereSquare() {
   var y = [];
   var x = Array.from("abcdefghijklmnopqrstuvwxyz");
+  var i;
   for(i = 0; i < 26; ++i){
     y.push(x.slice(0))
     x.push(x.shift())
@@ -8,7 +9,7 @@ function getVigenereSquare() {
   return y;
 }
 
-function encrypt(key, plainText) {
+export function encrypt(key, plainText) {
   //Input handling - the rest of the function breaks if we have 
   //uppercase letters
   //If we really need uppercase letter support, I can add that in later
@@ -19,7 +20,7 @@ function encrypt(key, plainText) {
   var length = key.length
   var encryptText = ""
 
-
+  var i;
   for(i = 0; i < plainText.length; ++i){
 
     //Check for spaces or special characters (don't "encrypt" these)
@@ -51,6 +52,7 @@ function decrypt(key, cipherText) {
   var length = key.length
   var plainText = ""
 
+  var i;
   for(i = 0; i < cipherText.length; ++i){
     if(cipherText[i].charCodeAt() == 32)
     {
@@ -74,12 +76,14 @@ function decrypt(key, cipherText) {
   return plainText;
 }
 
+/*
 console.log(getVigenereSquare());
 let key = 'crypto'
 let plaintext = 'TBP Crypto Taskforce';
 let ciphertext = encrypt(key, plaintext);
 console.log(plaintext, "\n", ciphertext, "\n");
 console.log(decrypt(key, ciphertext));
+*/
 
 // PLAINTEXT
 // BCDBCDBCD

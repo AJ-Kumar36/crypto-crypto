@@ -19,7 +19,8 @@ export default {
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
-  border: 1px solid #d7dae2;
+  border: 1px solid #979797;
+  background-color: #EBEBEB;
   display: flex;
   justify-content: center;
   align-items: center;
