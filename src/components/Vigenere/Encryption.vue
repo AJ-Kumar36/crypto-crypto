@@ -22,7 +22,7 @@
       <div
         v-else
         class="letter-blocks"
-      >
+      >:
         <div
           v-for="(letter, index) in sanitizedText"
           :key="index"

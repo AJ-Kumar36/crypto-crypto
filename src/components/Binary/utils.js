@@ -1,6 +1,6 @@
 export const getBinaryNumber = (decimal, minLength = 5) => {
   const dec = +decimal;
-  let binary = decimal.toStrinxg(2).padStart(minLength, '0').split('');
+  let binary = decimal.toString(2).padStart(minLength, '0').split('');
   return binary;
 }
 
@@ -12,13 +12,13 @@ export const getDecimalNumber = (binary) => {
 
 export function xorEncrypt(binary_plain, binary_key){
   var i;
-  let output = "";
+  let output = [];
   for(i = 0; i < binary_plain.length; ++i){
-    let plain = parseInt(binary_plain[i]);
-    let key = parseInt(binary_key[i % binary_key.length]);
-    output = output.concat(plain^key.toString(2));
+    let plain = parseInt(binary_plain[i], 2);
+    let key = parseInt(binary_key[i % binary_key.length], 2);
+    output.push((plain^key).toString(2).padStart(5, '0'));
   }
-  return output.split('');
+  return output;
 }
 
 export const alphabets = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ,.!?: ';

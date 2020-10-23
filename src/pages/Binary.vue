@@ -2,10 +2,14 @@
   <div>
     <Introduction />
     <DecimalToBinary :decimal="6" />
-    <DecimalToBinary :decimal="13" :guess="true" />
-    <Encryption
-      plainText="Crypto"
-      binaryKey="TBP"
+    <DecimalToBinary
+      :decimal="13"
+      :guess="true"
+    />
+    <BinaryToDecimal binary="00101" />
+    <BinaryToDecimal
+      binary="00101"
+      :guess="true"
     />
     <Conclusion />
   </div>
@@ -14,6 +18,8 @@
 <script>
 import Introduction from '../components/Binary/Introduction.vue';
 import DecimalToBinary from '../components/Binary/DecimalToBinary.vue';
+import BinaryToDecimal from '../components/Binary/BinaryToDecimal.vue';
+import XorTable from '../components/Binary/XorTable.vue';
 import Conclusion from '../components/Binary/Conclusion.vue';
 import Encryption from '../components/Binary/Encryption.vue';
 
@@ -22,7 +28,7 @@ export default {
   components: {
     Introduction,
     DecimalToBinary,
-    Encryption,
+    BinaryToDecimal,
     Conclusion,
   },
 }

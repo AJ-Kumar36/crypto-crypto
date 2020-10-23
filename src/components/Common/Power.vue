@@ -1,6 +1,6 @@
 <template>
   <span>
-    {{ content }}<sup>{{ superscript }}</sup><sub />
+    {{ content }}<sup>{{ superscript }}</sup><sub>{{ subscript }}</sub>
   </span>
 </template>
 
@@ -9,7 +9,8 @@ export default {
   name: 'Power',
   props: {
     base: { type: [Number, String], required: false, default: null },
-    superscript: { type: [Number, String], required: true }
+    superscript: { type: [Number, String], required: false, default: '' },
+    subscript: { type: [Number, String], required: false, default: '' }
   },
   computed: {
     content() {

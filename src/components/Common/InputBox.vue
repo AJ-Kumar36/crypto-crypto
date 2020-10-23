@@ -10,6 +10,7 @@
       <el-input
         ref="box"
         v-model="input"
+        :disabled="disabled"
         :class="['input-box', status]"
         status="warning"
         @input="updateInput"
@@ -28,8 +29,9 @@ export default {
     alphabet: { type: String, required: false, default: '' },
     singleLetter: { type: Boolean, require: false, default: false },
     bottomBorderOnly: { type: Boolean, required: false, default: false },
+    disabled: { type: Boolean, required: false, default: false },
   },
-  emits: ['input-correct'],
+  emits: ['input-correct', 'input-incorrect', 'input'],
   data() {
     return {
       input: '',
@@ -43,6 +45,7 @@ export default {
         this.$emit('input-correct');
         return 'correct';
       }
+      this.$emit('input-incorrect');
       return 'incorrect';
     },
     errorMessage() {
@@ -66,6 +69,7 @@ export default {
         input = this.maxLength === 1 ? input[input.length - 1] : input.slice(0, this.maxLength);
       }
       this.input = input;
+      this.$emit('input', input);
     },
     focus() {
       if (this.$refs.box) {
@@ -111,6 +115,12 @@ export default {
   letter-spacing: 1rem;
   padding-left: 1rem;
   text-align: left;
+}
+
+.bottom-line-only-container .el-form-item__error {
+  font-size: 14px;
+  right: 0;
+  margin-top: -.5rem;
 }
 
 .single-input-box-container .el-form-item__error {

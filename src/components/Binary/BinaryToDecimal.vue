@@ -1,9 +1,11 @@
 <template>
   <div class="container">
-    <span>{{ decimal }} =</span>
+    <Power subscript="2">
+      {{ binary }}
+    </Power><span>=</span>
     <div
       v-for="(power, index) in powers"
-      :key="`${decimal}-${power}`"
+      :key="`${binary}-${power}`"
     >
       <InputBox
         v-if="guess"
@@ -19,36 +21,43 @@
         2
       </Power>
       <span v-if="power != 0">+</span>
+      <span v-else>=</span>
     </div>
+    <InputBox
+      v-if="guess"
+      :ref="`input-${powers.length}`"
+      :answer="decimal.toString()"
+      :numberOnly="true"
+    />
+    <span v-else>{{ decimal }}</span>
   </div>
 </template>
 
 <script>
 import InputBox from '../Common/InputBox';
 import Power from '../Common/Power';
-import { getBinaryNumber } from './utils';
+import { getDecimalNumber } from './utils';
 
 export default {
-  name: 'DecimalToBinary',
+  name: 'BinaryToDecimal',
   components: {
     InputBox,
     Power,
   },
   props: {
-    decimal: { type: Number, required: true },
-    maxPower: { type: Number, required: false, default: 4 },
+    binary: { type: String, required: true },
     guess: { type: Boolean, required: false, default: false },
   },
   computed: {
     powers() {
       const array = [];
-      for (let i = this.maxPower; i >= 0; i--) {
+      for (let i = this.binary.length - 1; i >= 0; i--) {
         array.push(i);
       }
       return array;
     },
-    binary() {
-      return getBinaryNumber(this.decimal, this.maxPower + 1);
+    decimal() {
+      return getDecimalNumber(this.binary.split(''));
     },
   },
   methods: {
