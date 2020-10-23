@@ -1,18 +1,25 @@
 <template>
-  <div>
-    <span>{{ decimal }}=</span>
-    <div v-for="(power, index) in powers" :key="`${decimal}-${power}`">
+  <div class="container">
+    <span>{{ decimal }} =</span>
+    <div
+      v-for="(power, index) in powers"
+      :key="`${decimal}-${power}`"
+    >
       <InputBox
         v-if="guess"
         :ref="`input-${index}`"
         :answer="binary[index]"
         alphabet="01"
-        :singleLetter="true"
+        :maxLength="5"
+        :bottomBorderOnly="true"
         @input-correct="() => focus(index + 1)"
       />
       <span v-else>{{ binary[index] }}</span>
       <span>×</span>
-      <Power :superscript="power">2</Power>
+      <Power :superscript="power">
+        2
+      </Power>
+      <span v-if="power != 0">+</span>
     </div>
   </div>
 </template>
@@ -47,9 +54,9 @@ export default {
   },
   methods: {
     focus(index) {
-      console.log(this.$refs[`input-${index}`]);
-      if (this.$refs[`input-${index}`]) {
-        this.$refs[`input-${index}`][0].focus();
+      const refs = this.$refs[`input-${index}`];
+      if (refs && refs[0]) {
+        refs[0].focus();
       }
     }
   }
@@ -57,4 +64,10 @@ export default {
 </script>
 
 <style scoped>
+.container, div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+}
 </style>

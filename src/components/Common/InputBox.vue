@@ -1,8 +1,14 @@
 <template>
-  <el-form :class="['input-box-container', singleLetter && 'single-input-box-container']">
+  <el-form
+    :class="[
+      'input-box-container',
+      singleLetter && 'single-input-box-container',
+      bottomBorderOnly && 'bottom-line-only-container'
+    ]"
+  >
     <el-form-item :error="errorMessage">
       <el-input
-        :ref="inputBox"
+        ref="box"
         v-model="input"
         :class="['input-box', status]"
         status="warning"
@@ -21,7 +27,9 @@ export default {
     numberOnly: { type: Boolean, required: false, default: false },
     alphabet: { type: String, required: false, default: '' },
     singleLetter: { type: Boolean, require: false, default: false },
+    bottomBorderOnly: { type: Boolean, required: false, default: false },
   },
+  emits: ['input-correct'],
   data() {
     return {
       input: '',
@@ -30,6 +38,7 @@ export default {
   computed: {
     status() {
       if (!this.input) return 'empty';
+      if (this.bottomBorderOnly && this.input.length < this.maxLength) return 'empty';
       if (this.input === this.answer.toUpperCase()) {
         this.$emit('input-correct');
         return 'correct';
@@ -53,11 +62,14 @@ export default {
         const alphabet = this.alphabet.split('');
         input = input.split('').filter(char => alphabet.includes(char)).join('');
       }
-      this.input = input.slice(0, this.maxLength);
+      if (input.length > 0) {
+        input = this.maxLength === 1 ? input[input.length - 1] : input.slice(0, this.maxLength);
+      }
+      this.input = input;
     },
     focus() {
-      if (!this.$refs.inputBox) {
-        this.$refs.inputBox[0].focus();
+      if (this.$refs.box) {
+        this.$refs.box.focus();
       }
     },
   },
@@ -76,6 +88,7 @@ export default {
   line-height: 1;
   text-align: center;
   padding: 0;
+  color: #2c3e50;
 }
 
 .single-input-box-container .input-box > input {
@@ -84,5 +97,24 @@ export default {
 
 .input-box-container .input-box.correct > input {
   border-color: rgb(46, 204, 113);
+}
+
+.bottom-line-only-container .input-box > input {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+  height: 2rem;
+  width: 10.2rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 1rem;
+  padding-left: 1rem;
+  text-align: left;
+}
+
+.single-input-box-container .el-form-item__error {
+  font-size: 14px;
+  left: 12%;
 }
 </style>
