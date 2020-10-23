@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <span>Alphabet encryption scheme goes here</span>
     <div class="frame">
       <el-form
         v-if="guessPlainText"
@@ -75,14 +74,18 @@
     </div>
     <div class="inputs">
       <el-input
+        v-if="customizedPlainText"
         v-model="customPlain"
         class="input"
         placeholder="Plaintext"
+        @input="() => customPlain = updateCustomizedInput(customPlain)"
       />
       <el-input
+        v-if="customizedKeyText"
         v-model="keytext"
         class="input"
         placeholder="Key Text"
+        @input="() => keytext = updateCustomizedInput(keytext)"
       />
     </div>
   </div>
@@ -218,6 +221,13 @@ export default {
       if (this.encTextOutputs[index].length > 0 && index < this.sanitizedEnc.length - 1) {
         this.$refs[`encTextOutputs${index + 1}`][0].focus();
       }
+    },
+    updateCustomizedInput(customText) {
+      customText = customText.toUpperCase();
+      customText = customText.split('').filter(char => (
+        char.charCodeAt(0) >= 'A'.charCodeAt(0) && char.charCodeAt(0) <= 'Z'.charCodeAt(0)
+      )).join('');
+      return customText
     }
   },
 }

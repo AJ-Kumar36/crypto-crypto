@@ -2,10 +2,20 @@
   <div>
     <Introduction />
     <Table />
-    <Encryption
-      plainText="Happy"
-      vigenereKey="SAD"
-    />
+    <div class="tables">
+      <Encryption
+        plainText="Crypto"
+        vigenereKey="Mod"
+        :guessPlainText="true"
+        :guessEncryptedText="false"
+      />
+      <Encryption
+        plainText="MindSET"
+        vigenereKey="TBP"
+        :guessPlainText="false"
+        :guessEncryptedText="true"
+      />
+    </div>
     <Conclusion />
   </div>
 </template>
@@ -28,4 +38,12 @@ export default {
 </script>
 
 <style scoped>
+.tables {
+  display: flex;
+  justify-content: center;
+}
+
+.tables > *:not(:first-child){
+  margin-left: .5rem;
+}
 </style>
