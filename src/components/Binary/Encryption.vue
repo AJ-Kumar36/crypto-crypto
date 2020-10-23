@@ -248,7 +248,7 @@ export default {
 }
 
 .container {
-  padding: 0 8rem;
+  padding: 1.2rem 2rem;
   display: inline-flex;
   overflow-x: scroll;
   max-width: 100vw;
@@ -261,6 +261,10 @@ export default {
   align-items: flex-end;
   font-size: 1.5rem;
   margin: 0 2rem;
+}
+
+.letter-panel:last-child {
+  padding-right: 4rem;
 }
 
 .from-text, .to-text {
@@ -281,6 +285,7 @@ export default {
 .binary-numbers {
   letter-spacing: 1rem;
   padding-left: 1rem;
+  margin-right: .25rem;
   text-align: left;
 }
 
@@ -288,6 +293,11 @@ export default {
   background-color: #333;
   height: 1px;
   width: 100%;
+}
+
+.to-text span {
+  display: inline-block;
+  min-width: 1.5rem;
 }
 
 .output {
