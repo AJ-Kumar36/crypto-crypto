@@ -5,8 +5,31 @@
 </template>
 
 <script>
+const pages = [
+  '/caesar',
+  '/vigenere',
+  '/binary',
+  '/xor',
+  '/dh',
+];
+
 export default {
-  name: 'App'
+  name: 'App',
+  watch: {
+    '$store.state.progress'(newProgress, oldProgress) {
+      const newPage = +newProgress.split('/')[0];
+      const oldPage = +oldProgress.split('/')[0];
+      if (newPage !== oldPage) {
+        this.$router.push(pages[newPage]);
+      }
+    }
+  },
+  mounted() {
+    const progress = this.$store.state.progress;
+    const page = +progress.split('/')[0];
+    if (page === -1) return;
+    this.$router.push(pages[page]);
+  }
 }
 </script>
 

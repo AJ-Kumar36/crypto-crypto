@@ -109,7 +109,7 @@ export default {
   border-right: none;
   border-radius: 0;
   height: 2rem;
-  width: 10.2rem;
+  width: 10.4rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   letter-spacing: 1rem;

@@ -11,8 +11,6 @@
   </div>
 </template>
 
-
-
 <script>
 import CircleLetter from '../Common/CircleLetter.vue';
 

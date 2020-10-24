@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <span>Vigenere table goes here</span>
-  </div>
+  <div />
 </template>
 
 <script>

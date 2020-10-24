@@ -184,6 +184,9 @@ export default {
       this.updateKey();
     },
   },
+  mounted() {
+    this.updateKey();
+  },
   methods: {
     updateKeyA(value) {
       this.keyA = value.rgba;

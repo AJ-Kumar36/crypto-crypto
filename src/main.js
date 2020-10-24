@@ -18,6 +18,38 @@ Vue.use(Vuex)
 Vue.use(ElementUI)
 Vue.use(VueKonva)
 
+const store = new Vuex.Store({
+  state: {
+    progress: '-1/0',
+  },
+  getters: {
+    canAccess: (state) => (page, id) => {
+      const progress = state.progress.split('/');
+      if (+progress[0] === -1) return true;
+      return page >= +progress[0] && id >= +progress[1];
+    },
+  },
+  mutations: {
+    updateProgress(state, newProgress) {
+      state.progress = newProgress;
+    },
+  },
+});
+
+function initDatabase() {
+  if (!firebase || !firebase.database) {
+    return setTimeout(initDatabase, 200);
+  }
+
+  const database = firebase.database();
+  database.Reference.ref('/progress').on('value')
+    .then(snapshot => {
+      store.commit('updateProgress', snapshot.val())
+      console.log('Progress: ', snapshot.val());
+    });
+}
+initDatabase();
+
 const router = new VueRouter({
   mode: 'history',
   routes: [
@@ -31,6 +63,7 @@ const router = new VueRouter({
 });
 
 new Vue({
+  store,
   router,
   render: h => h(App),
 }).$mount('#app')

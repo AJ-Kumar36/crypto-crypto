@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <span>Alphabet encryption scheme goes here</span>
     <div class="frame">
       <el-form
         v-if="guessPlainText"
@@ -22,7 +21,7 @@
       <div
         v-else
         class="letter-blocks"
-      >:
+      >
         <div
           v-for="(letter, index) in sanitizedText"
           :key="index"
@@ -75,11 +74,13 @@
     </div>
     <div class="inputs">
       <el-input
+        v-if="customizedPlainText"
         v-model="customPlain"
         class="input"
         placeholder="Plaintext"
       />
       <el-input
+        v-if="customizedKeyText"
         v-model="keytext"
         class="input"
         placeholder="Key Text"

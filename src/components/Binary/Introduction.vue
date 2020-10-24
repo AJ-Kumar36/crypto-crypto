@@ -61,7 +61,6 @@ p {
   height: 2.85rem;
   font-size: 1.5rem;
 }
-
 .formula {
   display: flex;
   justify-content: center;

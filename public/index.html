@@ -6,6 +6,22 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
+
+    <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyDZla6JCcJJbiba1kqlGvUtqnuntOVBSic",
+        authDomain: "tbp-mindset.firebaseapp.com",
+        databaseURL: "https://tbp-mindset.firebaseio.com",
+        projectId: "tbp-mindset",
+        storageBucket: "tbp-mindset.appspot.com",
+        messagingSenderId: "871214653784",
+        appId: "1:871214653784:web:a0d55c994a0d9f3e64c52d"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
   </head>
   <body>
     <noscript>

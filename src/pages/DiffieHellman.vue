@@ -31,7 +31,7 @@ export default {
   },
   data() {
     return {
-      diffie: '',
+      diffie: null,
     }
   }
 }
