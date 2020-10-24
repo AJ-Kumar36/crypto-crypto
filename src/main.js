@@ -42,10 +42,10 @@ function initDatabase() {
   }
 
   const database = firebase.database();
-  // database.ref('progress').on('value', snapshot => {
-  //   store.commit('updateProgress', snapshot.val())
-  //   console.log('Progress: ', snapshot.val());
-  // });
+  database.ref('progress').on('value', snapshot => {
+    store.commit('updateProgress', snapshot.val())
+    console.log('Progress: ', snapshot.val());
+  });
 }
 initDatabase();
 
