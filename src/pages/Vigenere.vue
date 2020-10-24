@@ -1,13 +1,13 @@
 <template>
   <div>
-    <Introduction />
-    <Table />
+    <Introduction v-show="$store.getters.canAccess(1, 0)" />
     <Encryption
+      v-show="$store.getters.canAccess(1, 1)"
       plainText="Happy"
       vigenereKey="SAD"
     />
-    <Practice />
-    <Conclusion />
+    <Practice v-show="$store.getters.canAccess(1, 2)" />
+    <Conclusion v-show="$store.getters.canAccess(1, 3)" />
   </div>
 </template>
 
@@ -22,7 +22,6 @@ export default {
   name: 'Vigenere',
   components: {
     Introduction,
-    Table,
     Encryption,
     Practice,
     Conclusion,

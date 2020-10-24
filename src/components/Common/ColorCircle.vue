@@ -1,11 +1,10 @@
 <template>
   <div class="container">
     <div
-      v-if="isMystery"
       class="stripes"
+      :style="`opacity: ${isMystery ? 1 : 0}`"
     />
     <div
-      v-else
       class="round"
       :style="style"
     />
@@ -37,6 +36,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
 .stripes, .round {
@@ -48,6 +48,10 @@ export default {
 .stripes {
   background-image: linear-gradient(45deg, #eeeeee 25%, #cccccc 25%, #cccccc 50%, #eeeeee 50%, #eeeeee 75%, #cccccc 75%, #cccccc 100%);
   background-size: 3rem 3rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.5s;
 }
 
 span {

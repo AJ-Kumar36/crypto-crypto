@@ -26,7 +26,7 @@ const store = new Vuex.Store({
     canAccess: (state) => (page, id) => {
       const progress = state.progress.split('/');
       if (+progress[0] === -1) return true;
-      return page >= +progress[0] && id >= +progress[1];
+      return page <= +progress[0] && id <= +progress[1];
     },
   },
   mutations: {
@@ -42,11 +42,10 @@ function initDatabase() {
   }
 
   const database = firebase.database();
-  database.Reference.ref('/progress').on('value')
-    .then(snapshot => {
-      store.commit('updateProgress', snapshot.val())
-      console.log('Progress: ', snapshot.val());
-    });
+  database.ref('progress').on('value', snapshot => {
+    store.commit('updateProgress', snapshot.val())
+    console.log('Progress: ', snapshot.val());
+  });
 }
 initDatabase();
 

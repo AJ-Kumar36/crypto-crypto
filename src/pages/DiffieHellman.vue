@@ -1,19 +1,24 @@
 <template>
   <div>
-    <Introduction />
+    <Introduction 
+      v-show="$store.getters.canAccess(4, 0)"
+    />
     <Encryption 
+      v-show="$store.getters.canAccess(4, 1)"
       v-model="diffie" 
     />
     <XorEncryption
+      v-show="$store.getters.canAccess(4, 2)"
       plainText="Diffie"
       :encKey="diffie"
       :allowCustomKey="false"
       :allowCustomText="false"
     />
-    <Conclusion />
+    <Conclusion 
+      v-show="$store.getters.canAccess(4, 3)"
+    />
   </div>
 </template>
-
 
 <script>
 import Introduction from '../components/Diffie-Hellman/Introduction.vue'

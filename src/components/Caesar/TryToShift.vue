@@ -27,50 +27,54 @@
       :quizFrom="true"
     />
 
-    <p>Try encrypting the secret message!</p>
-    <h1 font-family>
-      {{ input }}
-      <el-input
-        v-model="input"
-        placeholder="Secret Message"
-        @input="inputSanitize"
+    <div v-show="$store.getters.canAccess(0, 2)">
+      <p>Try encrypting the secret message!</p>
+      <h1 font-family>
+        {{ input }}
+        <el-input
+          v-model="input"
+          placeholder="Secret Message"
+          @input="inputSanitize"
+        />
+      </h1>
+      <h1>{{ secretMessage }}</h1>
+      <LetterArray
+        :initialMessage="input"
+        :shift="shift"
       />
-    </h1>
-    <h1>{{ secretMessage }}</h1>
-    <LetterArray
-      :initialMessage="input"
-      :shift="shift"
-    />
-    <el-row>
-      <el-button @click="incrementShift">
-        Left Shift
-      </el-button>
-      <el-button @click="decrementShift">
-        Right Shift
-      </el-button>
-    </el-row>
-    <br>
-    <p><b>Encrypt the following messages using a Caesar Cipher!</b></p>
-    <div class="questions-container">
-      <div
-        v-for="(answer, index) in shiftAns"
-        :key="index"
-        class="question-container"
-      >
-        <span class="questions">{{ `Shift "${basePlain[index]}" ${shiftAmts[index]}:` }}</span>
-        <InputBox :answer="shiftAns[index]" />
-      </div>
+      <el-row>
+        <el-button @click="incrementShift">
+          Left Shift
+        </el-button>
+        <el-button @click="decrementShift">
+          Right Shift
+        </el-button>
+      </el-row>
+      <br>
     </div>
-    <br>
-    <p><b>Decrypt the following encrypted messages!</b></p>
-    <div class="encrypted-container">
-      <div
-        v-for="(answer, index) in encExamples"
-        :key="index"
-        class="encrypted-container"
-      >
-        <span class="encrypted-questions">{{ `${encExamples[index]}` }}</span>
-        <InputBox :answer="originalText[index]" />
+    <div v-show="$store.getters.canAccess(0, 3)">
+      <p><b>Encrypt the following messages using a Caesar Cipher!</b></p>
+      <div class="questions-container">
+        <div
+          v-for="(answer, index) in shiftAns"
+          :key="index"
+          class="question-container"
+        >
+          <span class="questions">{{ `Shift "${basePlain[index]}" ${shiftAmts[index]}:` }}</span>
+          <InputBox :answer="shiftAns[index]" />
+        </div>
+      </div>
+      <br>
+      <p><b>Decrypt the following encrypted messages!</b></p>
+      <div class="encrypted-container">
+        <div
+          v-for="(answer, index) in encExamples"
+          :key="index"
+          class="encrypted-container"
+        >
+          <span class="encrypted-questions">{{ `${encExamples[index]}` }}</span>
+          <InputBox :answer="originalText[index]" />
+        </div>
       </div>
     </div>
   </div>

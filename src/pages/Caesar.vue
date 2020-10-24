@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Introduction />
-    <TryToShift />
-    <Conclusion />
+    <Introduction v-show="$store.getters.canAccess(0, 0)" />
+    <TryToShift v-show="$store.getters.canAccess(0, 1)" />
+    <Conclusion v-show="$store.getters.canAccess(0, 4)" />
   </div>
 </template>
 

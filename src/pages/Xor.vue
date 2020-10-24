@@ -1,11 +1,14 @@
 <template>
   <div>
-    <XorTable />
+    <XorTable v-show="$store.getters.canAccess(3, 0)" />
     <Encryption
+      v-show="$store.getters.canAccess(3, 1)"
       plainText="Crypto"
       encKey="TBP"
     />  
-    <Conclusion />
+    <Conclusion 
+      v-show="$store.getters.canAccess(3, 2)"
+    />
   </div>
 </template>
 

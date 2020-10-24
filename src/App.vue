@@ -17,18 +17,20 @@ export default {
   name: 'App',
   watch: {
     '$store.state.progress'(newProgress, oldProgress) {
-      const newPage = +newProgress.split('/')[0];
-      const oldPage = +oldProgress.split('/')[0];
-      if (newPage !== oldPage) {
-        this.$router.push(pages[newPage]);
-      }
+      // const newPage = +newProgress.split('/')[0];
+      // const oldPage = +oldProgress.split('/')[0];
+      // if (newPage === -1) return;
+      // if (newPage !== oldPage) {
+      //   this.$router.push(pages[newPage]);
+      // }
     }
   },
   mounted() {
-    const progress = this.$store.state.progress;
-    const page = +progress.split('/')[0];
-    if (page === -1) return;
-    this.$router.push(pages[page]);
+    // const progress = this.$store.state.progress;
+    // const page = +progress.split('/')[0];
+    // if (page === -1) return;
+    // if (this.$route.path === pages[page]) return;
+    // this.$router.replace(pages[page]);
   }
 }
 </script>

@@ -19,10 +19,10 @@ export default {
   },
   data() {
     return {
-      decimalInputs: ["6", "23", "30", "15", "16"],
-      binaryInputs: ["10111", "11111", "01101", "01000", "00111"],
       plainTextInputs: ["Decrypting", "Engineer", "Mindset"],
-      plainTextKeys: [""]
+      plainTextKeys: ["MSG", "Math", "TBP"],
+      encryptedInputs: ["Alexander", "School", "Binary"],
+      encryptingKeys: ["Julie", "Remote"]
     }
   },
   methods: {
