@@ -1,22 +1,24 @@
 <template>
-  <el-form
-    :class="[
-      'input-box-container',
-      singleLetter && 'single-input-box-container',
-      bottomBorderOnly && 'bottom-line-only-container'
-    ]"
-  >
-    <el-form-item :error="errorMessage">
-      <el-input
-        ref="box"
-        v-model="input"
-        :disabled="disabled"
-        :class="['input-box', status]"
-        status="warning"
-        @input="updateInput"
-      />
-    </el-form-item>
-  </el-form>
+  <div class="overall-container" :style="`width: ${inputWidth};`">
+    <el-form
+      :class="[
+        'input-box-container',
+        singleLetter && 'single-input-box-container',
+        bottomBorderOnly && 'bottom-line-only-container'
+      ]"
+    >
+      <el-form-item :error="errorMessage">
+        <el-input
+          ref="box"
+          v-model="input"
+          :disabled="disabled"
+          :class="['input-box', status]"
+          status="warning"
+          @input="updateInput"
+        />
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script>
@@ -30,6 +32,7 @@ export default {
     singleLetter: { type: Boolean, require: false, default: false },
     bottomBorderOnly: { type: Boolean, required: false, default: false },
     disabled: { type: Boolean, required: false, default: false },
+    width: { type: String, required: false, default: null },
   },
   emits: ['input-correct', 'input-incorrect', 'input'],
   data() {
@@ -51,6 +54,14 @@ export default {
     errorMessage() {
       return this.status === 'incorrect' ? 'Not it' : null;
     },
+    inputWidth() {
+      if (this.width === null) {
+        if (this.bottomBorderOnly) return '10.4rem';
+        if (this.singleLetter) return '3rem';
+        return '8rem';
+      }
+      return this.width;
+    }
   },
   methods: {
     updateInput() {
@@ -80,6 +91,12 @@ export default {
 }
 </script>
 
+<style scoped>
+.overall-container {
+  display: inline-block;
+}
+</style>
+
 <style global>
 .input-box-container, .input-box-container .el-form-item {
   margin: 0;
@@ -87,16 +104,11 @@ export default {
 
 .input-box-container .input-box > input {
   font-size: 1.5rem;
-  width: 8rem;
   height: 3rem;
   line-height: 1;
   text-align: center;
   padding: 0;
   color: #2c3e50;
-}
-
-.single-input-box-container .input-box > input {
-  width: 3rem;
 }
 
 .input-box-container .input-box.correct > input {
@@ -109,7 +121,6 @@ export default {
   border-right: none;
   border-radius: 0;
   height: 2rem;
-  width: 10.4rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   letter-spacing: 1rem;

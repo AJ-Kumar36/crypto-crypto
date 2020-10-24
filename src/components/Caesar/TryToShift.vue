@@ -61,7 +61,10 @@
           class="question-container"
         >
           <span class="questions">{{ `Shift "${basePlain[index]}" ${shiftAmts[index]}:` }}</span>
-          <InputBox :answer="shiftAns[index]" />
+          <InputBox 
+            :answer="shiftAns[index]" 
+            width="16rem"
+          />
         </div>
       </div>
       <br>
@@ -73,7 +76,10 @@
           class="encrypted-container"
         >
           <span class="encrypted-questions">{{ `${encExamples[index]}` }}</span>
-          <InputBox :answer="originalText[index]" />
+          <InputBox 
+            :answer="originalText[index]" 
+            width="16rem"
+          />
         </div>
       </div>
     </div>
@@ -166,6 +172,7 @@ h1 {
 .question-container {
   display: flex;
   justify-content: flex-end;
+  flex-direction: row;
   align-items: center;
   margin: 1rem 0;
   width: 40rem;

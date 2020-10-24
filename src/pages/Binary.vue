@@ -9,7 +9,7 @@
     />
     <BinaryToDecimal v-show="$store.getters.canAccess(2, 2)" binary="00101" />
     <BinaryToDecimal
-     v-show="$store.getters.canAccess(2, 2)"
+      v-show="$store.getters.canAccess(2, 2)"
       binary="00101"
       :guess="true"
     />

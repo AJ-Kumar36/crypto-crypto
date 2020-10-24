@@ -21,9 +21,9 @@ export function xorEncrypt(binary_plain, binary_key){
   return output;
 }
 
-export const alphabets = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ,.!?: ';
+export const alphabets = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ,.!?:-';
 
-// A-Z , . ! ? : space 
+// A-Z , . ! ? : - 
 export const getLetterNumber = (letter) => {
   const ascii = letter.charCodeAt(0);
   if (ascii >= 'A'.charCodeAt(0) && ascii <= 'Z'.charCodeAt(0)) {
@@ -35,7 +35,7 @@ export const getLetterNumber = (letter) => {
     case '!': return 28;
     case '?': return 29;
     case ':': return 30;
-    case ' ':
+    case '-': return 31;
     default:
       return 31;
   }

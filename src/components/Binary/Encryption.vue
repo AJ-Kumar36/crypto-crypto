@@ -2,12 +2,14 @@
   <div class="overall-container">
     <div class="inputs">
       <el-input
+        v-if="allowCustomizedPlaintext"
         v-model="customPlain"
         class="input"
         placeholder="Plaintext"
         @input="updateCustomizedInput"
       />
       <el-input
+        v-if="allowCustomizedKey"
         v-model="customKey"
         class="input"
         placeholder="Key Text"
@@ -91,6 +93,8 @@ export default {
   props: {
     plainText: { type: String, required: true },
     encKey: { type: String, required: true },
+    allowCustomizedPlaintext: { type: Boolean, default: true },
+    allowCustomizedKey: { type: Boolean, default: true },
   },
   data() {
     return {
@@ -116,9 +120,8 @@ export default {
       }
       let sanitizedText = '';
       for (let char of text) {
-        const charCode = char.charCodeAt(0);
-        if (charCode >= aAscii && charCode <= zAscii) {
-          sanitizedText += char;
+        if (alphabets.includes(char)){
+          sanitizedText += char
         }
       }
       return sanitizedText.split('');
@@ -227,9 +230,9 @@ export default {
       this.alphabetOutputs = [...this.alphabetOutputs];
     },
     updateCustomizedInput(customText) {
-      customText = customText.toUpperCase();
-      customText = customText.split('').filter(char => alphabets.includes(char)).join('');
-      this.customPlain = customText
+      let customUpper = customText.toUpperCase();
+      customUpper = customUpper.split('').filter(char => alphabets.includes(char)).join('');
+      this.customPlain = customUpper
     },
     updateCustomizedKeyInput(customKey) {
       customKey = customKey.toUpperCase();
@@ -266,18 +269,26 @@ export default {
   padding-right: 4rem;
 }
 
+.input {
+  width: 20rem;
+  margin: .5rem;
+}
+
 .from-text, .to-text {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
 }
+
 .from-text {
   margin-bottom: 1rem;
 }
+
 .to-text {
   margin-top: 1rem;
 }
+
 .binary-numbers {
   letter-spacing: 1rem;
   padding-left: 1rem;

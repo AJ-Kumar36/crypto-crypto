@@ -1,6 +1,9 @@
 <template>
   <div class="container">
-    <div class="particle">
+    <div
+      class="particle"
+      :style="`height: ${particleHeight}px;`"
+    >
       <div class="color-picker-a">
         <div>
           <ColorPicker
@@ -8,8 +11,9 @@
             @input="updateKeyA"
           />
           <el-switch
+            v-show="$store.getters.canAccess(4, 4)"
             v-model="showBSelector"
-            active-text="Show B’s secret selector"
+            active-text="Show B’s secret key"
             class="switch"
           />
         </div>
@@ -32,16 +36,23 @@
           />
           <div style="height: 8rem;" />
           <ColorCircle
+            v-show="$store.getters.canAccess(4, 2)"
             :color="baseBlendKeyB"
             label="B’s Public Key"
           />
-          <span>+</span>
+          <span
+            v-show="$store.getters.canAccess(4, 3)"
+          >+</span>
           <ColorCircle
+            v-show="$store.getters.canAccess(4, 3)"
             :color="keyA"
             label="A’s Secret Key"
           />
-          <span>=</span>
+          <span
+            v-show="$store.getters.canAccess(4, 4)"
+          >=</span>
           <ColorCircle
+            v-show="$store.getters.canAccess(4, 4)"
             :color="colorBlend"
             label="Shared Secret Key"
           />
@@ -51,18 +62,21 @@
           <v-layer>
             <v-text>=</v-text>
             <v-arrow
+              v-if="$store.getters.canAccess(4, 2)"
               :points="[0, 580, 200, 750]"
               fill="#2c3e50"
               stroke="#2c3e50"
               :stroke-width="4"
             />
             <v-arrow
+              v-if="$store.getters.canAccess(4, 2)"
               :points="[200, 580, 0, 750]"
               fill="#2c3e50"
               stroke="#2c3e50"
               :stroke-width="4"
             />
             <v-text
+              v-if="$store.getters.canAccess(4, 2)"
               text="Public Transport"
               fill="black"
               align="center"
@@ -82,6 +96,7 @@
               verticalAlign="middle"
             />
             <v-text
+              v-if="$store.getters.canAccess(4, 4)"
               text="="
               fill="black"
               align="center"
@@ -102,7 +117,7 @@
           <span>+</span>
           <ColorCircle
             :color="keyB"
-            :isMystery="true"
+            :isMystery="!showBSelector"
             label="B’s Secret Key"
           />
           <span>=</span>
@@ -112,17 +127,22 @@
           />
           <div style="height: 8rem;" />
           <ColorCircle
+            v-show="$store.getters.canAccess(4, 2)"
             :color="baseBlendKeyA"
             label="A’s Public Key"
           />
-          <span>+</span>
+          <span
+            v-show="$store.getters.canAccess(4, 3)"
+          >+</span>
           <ColorCircle
+            v-show="$store.getters.canAccess(4, 3)"
             :color="keyB"
-            :isMystery="true"
+            :isMystery="!showBSelector"
             label="B’s Secret Key"
           />
-          <span>=</span>
+          <span v-show="$store.getters.canAccess(4, 4)">=</span>
           <ColorCircle
+            v-show="$store.getters.canAccess(4, 4)"
             :color="colorBlend"
             label="Shared Secret Key"
           />
@@ -135,6 +155,9 @@
         />
       </div>
     </div>
+    <p v-if="$store.getters.canAccess(4, 4)">
+      Shared Secret Key: {{ generateKey }}
+    </p>
   </div>
 </template>
 
@@ -158,7 +181,7 @@ export default {
       base: 'rgba(30, 139, 195, .7)',
       keyA: { r: 35, g: 203, b: 167, a: .7 },
       keyB: { r: 210, g: 77, b: 87, a: .4 },
-      showBSelector: true,
+      showBSelector: false,
       konvaConfig: {
         width: 200,
         height: 1364,
@@ -177,7 +200,13 @@ export default {
     },
     generateKey() {
       return rgbToKey(rgbaToRgb(this.colorBlend));
-    }
+    },
+    particleHeight() {
+      if (this.$store.getters.canAccess(4, 4)) return 1364;
+      if (this.$store.getters.canAccess(4, 3)) return 1200;
+      if (this.$store.getters.canAccess(4, 2)) return 1000;
+      return 618;
+    },
   },
   watch: {
     generateKey() {
@@ -205,6 +234,7 @@ export default {
 .particle {
   display: flex;
   justify-content: center;
+  margin-bottom: 2rem;
 }
 
 .color-picker-a {
@@ -230,6 +260,7 @@ export default {
 
 .color-parallel {
   display: flex;
+  overflow-y: hidden;
 }
 
 .column {

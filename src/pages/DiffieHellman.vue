@@ -5,17 +5,17 @@
     />
     <Encryption 
       v-show="$store.getters.canAccess(4, 1)"
-      v-model="diffie" 
+      v-model="diffie"
     />
     <XorEncryption
-      v-show="$store.getters.canAccess(4, 2)"
+      v-show="$store.getters.canAccess(4, 4)"
       plainText="Diffie"
       :encKey="diffie"
-      :allowCustomKey="false"
-      :allowCustomText="false"
+      :allowCustomizedKey="false"
+      :allowCustomizedPlaintext="true"
     />
-    <Conclusion 
-      v-show="$store.getters.canAccess(4, 3)"
+    <Conclusion
+      v-show="$store.getters.canAccess(4, 5)"
     />
   </div>
 </template>

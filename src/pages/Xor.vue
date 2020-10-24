@@ -5,7 +5,8 @@
       v-show="$store.getters.canAccess(3, 1)"
       plainText="Crypto"
       encKey="TBP"
-    />  
+    />
+    <TryToEncrypt />
     <Conclusion 
       v-show="$store.getters.canAccess(3, 2)"
     />
@@ -16,12 +17,14 @@
 import XorTable from '../components/Binary/XorTable.vue';
 import Conclusion from '../components/Binary/Conclusion.vue';
 import Encryption from '../components/Binary/Encryption.vue';
+import TryToEncrypt from '../components/Binary/TryToEncrypt.vue'
 
 export default {
   name: 'XOR',
   components: {
     XorTable,
     Encryption,
+    TryToEncrypt,
     Conclusion
   },
 }
