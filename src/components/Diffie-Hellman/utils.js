@@ -2,10 +2,9 @@ import { normal } from 'color-blend';
 
 // blendColors([r, g, b, alpha], [r, g, b, alpha], ...)
 export function blendColors(...rgbaList) {
-  console.log('colors 11:', rgbaList);
-  rgbaList = rgbaList.filter(s => s).map(s => {
+  rgbaList = rgbaList.map(s => {
     if (typeof s === 'string') return rgbaToRgbaArray(s);
-    if (s.length > 0) return s;
+    if (s.length !== undefined) return s;
     return [s.r, s.g, s.b, s.a];
   });
   rgbaList.sort((a, b) => {
@@ -17,7 +16,6 @@ export function blendColors(...rgbaList) {
     if (b[2] > a[2]) return -1;
     return a[3] > b[3] ? 1 : -1;
   });
-  console.log('colors:', rgbaList);
   let color = rgbaList[0]
   color = { r: +color[0], g: +color[1], b: +color[2], a: +color[3] };
   for (let i = 1; i < rgbaList.length; i++) {
@@ -39,18 +37,18 @@ export function rgbaToRgbaArray(rgba) {
   array[1] = +split[1];
   array[2] = +split[2];
   array[3] = +split[3].slice(0, split[3].indexOf(')'));
+  return array;
 }
 
 export function rgbaToRgb(rgba) {
   const c = document.createElement('canvas');
   const ctx = c.getContext('2d');
-  ctx.fillStyle('#ffffff');
-  color = typeof rgba === 'string' ? rgba : `rgba(${rgba.join(',')})`;
-  ctx.fillStyle(color);
+  ctx.fillStyle = '#ffffff';
+  const color = typeof rgba === 'string' ? rgba : `rgba(${rgba.join(',')})`;
+  ctx.fillStyle = color;
   ctx.fillRect(0, 0, 10, 10);
-  ctx.getImageData(5, 5, 1, 1).data;
-  const rgb = [p[0], p[1], p[2]];
-  return rgb;
+  const p = ctx.getImageData(5, 5, 1, 1).data;
+  return [p[0], p[1], p[2]];
 }
 
 export function componentToHex(c) {
@@ -59,10 +57,9 @@ export function componentToHex(c) {
 }
 
 export function hexToLetter(hexChar){
-  if(hexChar.charCodeAt(0) >= 'a'.charCodeAt(0) && hexChar.charCodeAt(0) <= 'f'.charCodeAt(0)){
+  if (hexChar.charCodeAt(0) >= 'a'.charCodeAt(0) && hexChar.charCodeAt(0) <= 'f'.charCodeAt(0)) {
     return hexChar.toUpperCase()
-  }
-  else{
+  } else {
     let newChar = hexChar.charCodeAt(0) - '0'.charCodeAt(0)
     return String.fromCharCode(('G'.charCodeAt(0) + newChar))
   }
@@ -71,8 +68,7 @@ export function hexToLetter(hexChar){
 export function rgbToKey(color_array){
   let outputKey = []
   let hexRep = ('' + componentToHex(color_array[0]) + componentToHex(color_array[1]) + componentToHex(color_array[2])).split('');
-  console.log(hexRep)
-  for (let hexChar of hexRep){
+  for (let hexChar of hexRep) {
     outputKey.push(hexToLetter(hexChar));
   }
   return outputKey.join('')
