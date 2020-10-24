@@ -2,12 +2,14 @@
   <div class="overall-container">
     <div class="inputs">
       <el-input
+        v-if="allowCustomText"
         v-model="customPlain"
         class="input"
         placeholder="Plaintext"
         @input="updateCustomizedInput"
       />
       <el-input
+        v-if="allowCustomKey"
         v-model="customKey"
         class="input"
         placeholder="Key Text"
@@ -91,6 +93,8 @@ export default {
   props: {
     plainText: { type: String, required: true },
     encKey: { type: String, required: true },
+    allowCustomKey: { type: Boolean, required: false, default: true },
+    allowCustomText: { type: Boolean, required: false, default: true }
   },
   data() {
     return {

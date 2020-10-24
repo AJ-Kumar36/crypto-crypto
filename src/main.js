@@ -10,6 +10,7 @@ import CaesarPage from './pages/Caesar.vue';
 import VigenerePage from './pages/Vigenere.vue';
 import BinaryPage from './pages/Binary.vue';
 import XORPage from './pages/Xor.vue';
+import DiffiePage from './pages/DiffieHellman.vue';
 
 Vue.config.productionTip = false
 Vue.use(VueRouter)
@@ -24,7 +25,8 @@ const router = new VueRouter({
     { path: '/caesar', component: CaesarPage },
     { path: '/vigenere', component: VigenerePage },
     { path: '/binary', component: BinaryPage },
-    { path: '/xor', component: XORPage}
+    { path: '/xor', component: XORPage },
+    { path: '/dh', component: DiffiePage }
   ],
 });
 
